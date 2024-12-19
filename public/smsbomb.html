@@ -40,7 +40,7 @@
             font-weight: 500;
         }
         .form-item input {
-            width: 94%;
+            width: 100%;
             padding: 8px;
             margin-top: 5px;
             border: 1px solid #ccc;
@@ -93,7 +93,6 @@
             font-size: 18px;
             text-decoration: none;
             font-weight: bold;
-            margin-right: 15px;
         }
         footer {
             text-align: center;
@@ -119,9 +118,6 @@
             word-wrap: break-word;
         }
         @media (max-width: 768px) {
-            .form-item input {
-                width: 100%;
-            }
             header .site-name {
                 font-size: 18px;
             }
@@ -135,13 +131,13 @@
         <img src="https://i.imgur.com/TsgBMoj.jpeg" alt="Logo">
         <div class="site-name">Sms Bomb</div>
     </div>
-    <a href="index.html" class="home-button">Home</a>
+    <a href="/" class="home-button">Home</a>
 </header>
 
 <div class="wrapper-container">
     <div class="form-wrapper">
         <form onsubmit="submitForm(event)" class="form-container">
-            <h2 id="sms-input"> Sms Bomb</h2>
+            <h2>Sms Bomb</h2>
             <div class="form-item">
                 <label for="phonenum">Phone Number</label>
                 <input type="text" id="phonenum" name="phonenum" placeholder="Enter phone number" required>
@@ -151,7 +147,7 @@
                 <input type="number" id="spamnum" name="spamnum" placeholder="Enter number of messages" required>
             </div>
             <div class="form-item">
-                <button type="submit" id="submit-button"><i class="fas fa-paper-plane icon"></i> Send</button>
+                <button type="submit"><i class="fas fa-paper-plane icon"></i> Send</button>
             </div>
         </form>
     </div>
@@ -164,6 +160,8 @@
 </footer>
 
 <script>
+    const baseURL = "https://ccprojectapis.ddns.net/api/smsbomb";
+
     async function initialize() {
         updateTime();
         setInterval(updateTime, 1000);
@@ -178,7 +176,7 @@
 
     async function updatePing() {
         const start = performance.now();
-        await fetch("https://ccprojectapis.ddns.net/api/smsbomb?phonenum=test&spamnum=1");
+        await fetch(`${baseURL}?phonenum=test&spamnum=1`);
         const ping = Math.round(performance.now() - start);
         document.getElementById("ping").innerHTML = `Ping: ${ping} ms`;
     }
@@ -189,7 +187,7 @@
         const spamnum = document.getElementById("spamnum").value;
 
         try {
-            const response = await fetch(`https://ccprojectapis.ddns.net/api/smsbomb?phonenum=${phonenum}&spamnum=${spamnum}`);
+            const response = await fetch(`${baseURL}?phonenum=${phonenum}&spamnum=${spamnum}`);
             const result = await response.text();
 
             const responseContainer = document.getElementById("response-container");

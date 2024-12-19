@@ -7,6 +7,9 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 const total = new Map();
+app.get('/pending', (req, res) => {
+    res.sendFile(__dirname + '/public/pending.html');
+});
 app.get('/total', (req, res) => {
   const data = Array.from(total.values()).map((link, index)  => ({
     session: index + 1,
