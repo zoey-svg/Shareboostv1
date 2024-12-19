@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coming Soon</title>
+    <link rel="icon" href="https://i.imgur.com/lJoUwgx.jpeg" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        .wrapper-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .form-wrapper {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        header {
+            background-color: #87ceeb; 
+            backdrop-filter: blur(10px); 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            font-size: 1.9em;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 0 0 40px 40px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        header .site-name {
+            margin-left: 10px;
+            font-size: 24px;
+            font-weight: 600;
+            color: white;
+            letter-spacing: 3px;
+        }
+        header img {
+            width: 40px;
+            border-radius: 40px;
+            height: auto;
+            border: 1px solid white;
+            padding: 3px;
+        }
+        header .home-button {
+            color: white;
+            font-size: 18px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+        footer span {
+            display: block;
+        }
+        .countdown-container {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9ecef;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-size: 18px;
+            font-weight: bold;
+            color: #444;
+        }
+        .button-container {
+            margin-top: 20px;
+        }
+        .notify-button {
+            padding: 10px;
+            background-color: #87ceeb;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .notify-button:hover {
+            background-color: #6ab6d9;
+        }
+        @media (max-width: 768px) {
+            header .site-name {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body onload="initialize()">
+
+<header>
+    <div style="display: flex; align-items: center;">
+        <img src="https://i.imgur.com/Z2tvlLB.jpeg" alt="Logo">
+        <div class="site-name">Coming Soon</div>
+    </div>
+    <a href="index.html" class="home-button">Home</a>
+</header>
+
+<div class="wrapper-container">
+    <div class="form-wrapper">
+        <h2>The website is still under construction 🥹</h2>
+        <div id="countdown" class="countdown-container">00d : 00h : 00m : 00s</div>
+        <div class="button-container">
+            <button class="notify-button" onclick="notifyMe()">Notify Me</button>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <span id="time"><i class="fas fa-clock icon"></i> Time: --:--:--</span>
+    <span id="ping"><i class="fas fa-wifi icon"></i> Ping: -- ms</span>
+</footer>
+<script>
+    const countdownElement = document.getElementById('countdown');
+    const targetDate = new Date("2024-12-31T00:00:00").getTime();
+
+    function initialize() {
+        updateTime();
+        updateCountdown();
+        setInterval(updateTime, 1000);
+        setInterval(updateCountdown, 1000);
+        measurePing();
+        setInterval(measurePing, 5000);
+    }
+
+    function updateTime() {
+        const now = new Date();
+        const timeString = now.toLocaleTimeString();
+        document.getElementById('time').textContent = `Time: ${timeString}`;
+    }
+
+    async function measurePing() {
+        const start = performance.now();
+        await fetch(window.location.href);
+        const ping = Math.round(performance.now() - start);
+        document.getElementById('ping').textContent = `Ping: ${ping} ms`;
+    }
+
+    function updateCountdown() {
+        const now = new Date().getTime();
+        const timeLeft = targetDate - now;
+
+        if (timeLeft <= 0) {
+            countdownElement.textContent = "We're Live!";
+            clearInterval(updateCountdown);
+            return;
+        }
+
+        const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+        countdownElement.textContent = `${days}d : ${hours}h : ${minutes}m : ${seconds}s`;
+    }
+
+    function notifyMe() {
+        Swal.fire({
+            icon: 'info',
+            title: 'Notification',
+            text: "We'll notify you when we're live!",
+            confirmButtonText: 'Okay'
+        });
+    }
+
+    window.onload = initialize;
+</script>
+    
+</body>
+</html>

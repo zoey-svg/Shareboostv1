@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Share Boost</title>
+    <link rel="icon" href="https://i.imgur.com/lJoUwgx.jpeg" type="image/png">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body onload="showNotice()">
+
+<header>
+    <div style="display: flex; align-items: center;">
+        <img src="https://i.imgur.com/lJoUwgx.jpeg" alt="Logo">
+        <div class="site-name">Share Boost</div>
+    </div>
+    <div class="hamburger-menu" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <nav class="nav-links">
+        <a href="pending.html">Appstate Getter</a>
+        <a href="pending.html">Token Getter</a>
+        <a href="smsbomb.html">Sms Bomb</a>
+</header>
+
+<div class="wrapper-container">
+    <div class="form-wrapper">
+        <form onsubmit="submitForm(event)" class="form-container">
+            <h2 id="facebook-auth">FB-SHARE</h2>
+            <div class="form-item">
+                <label for="cookies">Appstate</label>
+                <input type="text" id="cookies" name="cookie" placeholder="Your Facebook state">
+            </div>
+            <div class="form-item" id="post-link">
+                <label for="urls">Post Link</label>
+                <input type="text" id="urls" name="url" placeholder="Your link">
+            </div>
+            <div class="form-item" id="share-target">
+                <label for="amounts">Share Target</label>
+                <input type="text" id="amounts" name="amount" placeholder="Your amount">
+            </div>
+            <div class="form-item" id="share-delay">
+                <label for="intervals">Share Delay</label>
+                <input type="text" id="intervals" name="interval" placeholder="Share delay" pattern="[0-9]*">
+            </div>
+            <div class="form-item">
+                <button type="submit" id="submit-button"><i class="fas fa-paper-plane icon"></i> Submit</button>
+            </div>
+        </form>
+    </div>
+    <h5 style="text-align: center;">Made with ❤️ by Jay Mar</h5>
+</div>
+
+<footer>
+    <span id="time"><i class="fas fa-clock icon"></i> Time: --:--:--</span>
+    <span id="ping"><i class="fas fa-wifi icon"></i> Ping: -- ms</span>
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>

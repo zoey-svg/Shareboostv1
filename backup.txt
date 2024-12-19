@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Share Boost</title>
+    <link rel="icon" href="https://i.imgur.com/lJoUwgx.jpeg" type="image/png">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        .wrapper-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .form-wrapper {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .form-item {
+            margin-bottom: 15px;
+            width: 100%;
+        }
+        .form-item label {
+            font-weight: 500;
+        }
+        .form-item input {
+            width: 94%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-item button {
+            padding: 10px;
+            background-color: #87ceeb;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 150px;
+            margin-top: 10px;
+        }
+        .form-item button:disabled {
+            background-color: #ccc;
+        }
+        header {
+            background-color: #87ceeb; 
+            backdrop-filter: blur(10px); 
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            font-size: 1.9em;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 0 0 40px 40px;
+            margin-bottom: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        header .site-name {
+            margin-left: 10px;
+            font-size: 24px;
+            font-weight: 600;
+            color: white;
+            letter-spacing: 3px;
+        }
+        header img {
+            width: 40px;
+            border-radius: 40px;
+            height: auto;
+            border: 1px solid white;
+            padding: 3px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+        footer span {
+            display: block;
+        }
+        .icon {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body onload="showNotice()">
+
+<header>
+    <img src="https://i.imgur.com/lJoUwgx.jpeg" alt="Logo">
+    <div class="site-name">Share Boost</div>
+</header>
+
+<div class="wrapper-container">
+    <div class="form-wrapper">
+        <form onsubmit="submitForm(event)" class="form-container">
+            <h2><i class="fab fa-facebook icon"></i> FACEBOOK AUTH</h2>
+            <div class="form-item">
+                <label for="cookies">Fbstate/Appstate</label>
+                <input type="text" id="cookies" name="cookie" placeholder="Your Facebook state">
+            </div>
+            <div class="form-item">
+                <label for="urls">Post Link (FB URL)</label>
+                <input type="text" id="urls" name="url" placeholder="Your link">
+            </div>
+            <div class="form-item">
+                <label for="amounts">Share Target (number of shares)</label>
+                <input type="text" id="amounts" name="amount" placeholder="Your amount">
+            </div>
+            <div class="form-item">
+                <label for="intervals">Share Delay (suggest 2 or 3)</label>
+                <input type="text" id="intervals" name="interval" placeholder="Share delay" pattern="[0-9]*">
+            </div>
+            <div class="form-item">
+                <button type="submit" id="submit-button"><i class="fas fa-paper-plane icon"></i> Submit</button>
+            </div>
+        </form>
+    </div>
+    <h5 style="text-align: center;">Made with ❤️ by Jay Mar</h5>
+</div>
+
+<footer>
+    <span id="time"><i class="fas fa-clock icon"></i> Time: --:--:--</span>
+    <span id="ping"><i class="fas fa-wifi icon"></i> Ping: -- ms</span>
+</footer>
+
+<script>
+    function showNotice() {
+    Swal.fire({
+        title: 'Notice',
+        text: 'This tool is not for sale. Use it if you want, but do not abuse it. If the tool is for sale, please contact the developer on Facebook <a href="">heru</a>.',
+        icon: 'info',
+        confirmButtonText: 'Understood'
+    });
+}
+
+async function submitForm(event) {
+    event.preventDefault();
+
+    const cookiesInput = document.getElementById('cookies');
+    const urlInput = document.getElementById('urls');
+    const amountInput = document.getElementById('amounts');
+    const intervalInput = document.getElementById('intervals');
+    const button = document.getElementById('submit-button');
+
+    const cookies = cookiesInput.value.trim();
+    const url = urlInput.value.trim();
+    const amount = parseInt(amountInput.value.trim(), 10);
+    const interval = parseInt(intervalInput.value.trim(), 10);
+
+    if (!cookies || !url || isNaN(amount) || isNaN(interval)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Please fill out all fields!',
+        });
+        return;
+    }
+
+    try {
+        button.disabled = true;
+
+        const response = await fetch('/api/submit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                cookie: cookies,
+                url: url,
+                amount: amount,
+                interval: interval
+            })
+        });
+
+        if (!response.ok) throw new Error('Submission failed!');
+
+        const data = await response.json();
+        if (data.status !== 200) throw new Error('Sharing failed!');
+
+        let remainingShares = amount;
+
+        Swal.fire({
+            title: 'Share Process',
+            html: `<progress id="progress-bar" value="0" max="100"></progress><br><span id="countdown">Share count: ${remainingShares}</span>`,
+            showCancelButton: false,
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            didOpen: () => {
+                const progressBar = document.getElementById('progress-bar');
+                const countdownElement = document.getElementById('countdown');
+
+                const shareInterval = setInterval(() => {
+                    remainingShares--;
+                    const progressPercentage = ((amount - remainingShares) / amount) * 100;
+                    progressBar.value = progressPercentage;
+                    countdownElement.textContent = `Remaining shares: ${remainingShares}`;
+
+                    if (remainingShares <= 0) {
+                        clearInterval(shareInterval);
+                        countdownElement.textContent = 'All shares completed.';
+                        Swal.fire({
+                            title: 'Success!',
+                            text: 'All shares have been completed!',
+                            icon: 'success',
+                            confirmButtonText: 'Cool'
+                        });
+                    }
+                }, interval * 1000);
+            }
+        });
+
+    } catch (error) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'An error occurred. Please try again!',
+        });
+        console.error(error);
+    } finally {
+        button.disabled = false;
+    }
+}
+
+function updateTime() {
+    const now = new Date();
+    const timeString = now.toLocaleTimeString();
+    document.getElementById('time').textContent = `Time: ${timeString}`;
+}
+setInterval(updateTime, 1000);
+
+async function measurePing() {
+    const start = performance.now();
+    await fetch(window.location.href);
+    const end = performance.now();
+    const ping = Math.round(end - start);
+    document.getElementById('ping').textContent = `Ping: ${ping} ms`;
+}
+setInterval(measurePing, 1000);
+                        
+</script>
+
+</body>
+</html>

@@ -1,0 +1,154 @@
+ body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        .wrapper-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .form-wrapper {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .form-item {
+            margin-bottom: 15px;
+            width: 100%;
+        }
+        .form-item label {
+            font-weight: 500;
+        }
+        .form-item input {
+            width: 94%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-item button {
+            padding: 10px;
+            background-color: #87ceeb;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 150px;
+            margin-top: 10px;
+        }
+        .form-item button:disabled {
+            background-color: #ccc;
+        }
+        header {
+            background-color: #87ceeb; 
+            backdrop-filter: blur(10px); 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            font-size: 1.9em;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 0 0 40px 40px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        header .site-name {
+            margin-left: 10px;
+            font-size: 24px;
+            font-weight: 600;
+            color: white;
+            letter-spacing: 3px;
+        }
+        header img {
+            width: 40px;
+            border-radius: 40px;
+            height: auto;
+            border: 1px solid white;
+            padding: 3px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+        footer span {
+            display: block;
+        }
+        .icon {
+            margin-right: 8px;
+        }
+        /* Hamburger menu styles */
+        .hamburger-menu {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        transform: scale(0.8);
+        transition: transform 0.3s ease;
+    }
+
+    .hamburger-menu span {
+        display: block;
+        background-color: white;
+        height: 3px;
+        margin: 4px 0;
+        width: 25px;
+        border-radius: 2px;
+        transition: all 0.3s ease;
+    }
+
+    .hamburger-menu.open span:nth-child(1) {
+        transform: rotate(46deg) translate(9px, 9px);
+    }
+
+    .hamburger-menu.open span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger-menu.open span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+    }
+        .nav-links {
+            display: none;
+            flex-direction: column;
+            background-color: #87ceeb;
+            position: absolute;
+            top: 70px;
+            right: 20px;
+            width: 200px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+        .nav-links a {
+            padding: 10px;
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            font-size: 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .nav-links a:last-child {
+            border-bottom: none;
+        }
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        @media (max-width: 768px) {
+            .hamburger-menu {
+                display: flex;
+            }
+        }
